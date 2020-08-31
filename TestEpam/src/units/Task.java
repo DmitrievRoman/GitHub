@@ -1,12 +1,11 @@
-import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
+package units;
+
+import storage.StorageTask;
 /*
 Класс "Задача"
 Переменная taskCount не считает текущее количество задач, а служит для правильного создания новых задач
  */
-public class Task implements Serializable {
-    static Map <Integer, Task> tasks = new HashMap<>();
+public class Task extends Unit {
     public static int taskCount = 0;
     private int taskID;
     private Project project;
@@ -16,7 +15,7 @@ public class Task implements Serializable {
     private User executor;
     private String description;
 
-    public Task (Project project, String topic, String type, String priority, User executor, String description) {
+    public Task (Project project, String topic, String type, String priority, User executor, String description, StorageTask storageTask) {
         taskCount++;
         this.project = project;
         this.topic = topic;
@@ -25,17 +24,29 @@ public class Task implements Serializable {
         this.executor = executor;
         this.description = description;
         this.taskID = taskCount;
-        tasks.put(taskCount, Task.this);
+        storageTask.add(taskCount, Task.this);
         project.addTask(Task.this);
         executor.addTask(Task.this);
+    }
+    public String getType() {
+        return type;
+    }
+    public String getPriority() {
+        return priority;
+    }
+    public String getDescription() {
+        return description;
     }
     public Project getProject() {
         return project;
     }
-    public String getTopic() {
+    public String getName() {
         return topic;
     }
     public Integer getID() {
         return taskID;
+    }
+    public User getExecutor() {
+        return executor;
     }
 }
