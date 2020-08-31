@@ -6,8 +6,9 @@ import storage.StorageUser;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Map;
-
+//Данный класс создает объекты необходимые для работы программы
 public class StartMenu {
+    boolean isWorking = true;
     BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     StorageUser storageUser = new StorageUser();
     StorageProject storageProject = new StorageProject();
@@ -18,14 +19,17 @@ public class StartMenu {
     String a = System.getProperty("user.dir") + "\\LastSave.txt";
     String b = System.getProperty("user.dir") + "\\Save.ser";
     String pathToSourceFile = "";
+    //метод запускает начальное меню
     public void run() throws IOException, ClassNotFoundException {
+    while (isWorking) {
         System.out.println("1.Новая сессия");
         System.out.println("2.Загрузить последнюю сессию");
         System.out.println("3.Указать путь к файлу для его загрузки");
-    String userInput = reader.readLine();
+        String userInput = reader.readLine();
         switch (userInput) {
             case ("1"):
                 starter.Start();
+                isWorking = false;
                 break;
             case ("2"):
                 File file = new File(a);
@@ -37,20 +41,23 @@ public class StartMenu {
                     fr.close();
                 }
                 loader.load(pathToSourceFile);
+                isWorking = false;
                 break;
             case ("3"):
                 //При этом варианте пользователь сам указывает путь к Save файлу
                 System.out.println("Укажите путь к файлу");
                 pathToSourceFile = reader.readLine();
                 loader.load(pathToSourceFile);
+                isWorking = false;
                 break;
-//            default:
-//                System.out.println("Введите цифру для выбора дальнейшего действия");
-//                load();
-//                break;
+            default:
+                System.out.println("Введите цифру для выбора дальнейшего действия");
+                break;
         }
+    }
 
     }
+    //Данный метод сохраняет результат работы программы
     public void save() throws IOException {
         ArrayList<User> usersForSave = new ArrayList<>();
         for (Map.Entry<Integer, User> pair : storageUser.getStorage().entrySet()) {

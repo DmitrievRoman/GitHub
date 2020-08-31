@@ -2,9 +2,10 @@ package storage;
 import units.Unit;
 
 import java.util.Map;
-
+//Класс родитель для классов хранящих массивы проектов, задач и пользователей
 public abstract class Storage {
     public abstract void delete(int id);
+    //данный метод выводит в консоль содержимое Map, в качестве параметра принимает Map, содержимое которой требуется вывести
     public void getAll(Map<Integer, Unit> storage) {
         if(storage.isEmpty()) {
             System.out.println("Список пуст");

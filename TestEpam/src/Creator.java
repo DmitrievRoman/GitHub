@@ -11,7 +11,7 @@ import java.io.InputStreamReader;
 import java.util.Map;
 /*
 Класс создает и удаляет пользователей, задачи и проекты
-
+Также данный класс проверяет корректность ввода пользователя
  */
 
 public class Creator {
@@ -36,7 +36,12 @@ public class Creator {
     public void deleteUser() throws IOException {
         storageUser.getAll(storageUser.getList());
         System.out.println("Введите ID пользователя для удаления");
-        int id = Integer.parseInt(reader.readLine());
+        int id = 0;
+        try {
+            id = Integer.parseInt(reader.readLine());
+        } catch (NumberFormatException e) {
+            System.out.println("Ошибка ввода, вероятнее всего вы ввели не цифру");
+        }
         for (Map.Entry<Integer, User> pair : storageUser.getStorage().entrySet()) {
             if (id == pair.getKey()) {
                 storageUser.delete(id);
@@ -56,7 +61,12 @@ public class Creator {
     public void deleteProject() throws IOException {
         storageProject.getAll(storageProject.getList());
         System.out.println("Введите ID проекта для удаления");
-        int id = Integer.parseInt(reader.readLine());
+        int id = 0;
+        try {
+            id = Integer.parseInt(reader.readLine());
+        } catch (NumberFormatException e) {
+            System.out.println("Ошибка ввода, вероятнее всего вы ввели не цифру");
+        }
         for (Map.Entry<Integer, Project> pair : storageProject.getStorage().entrySet()) {
             if (id == pair.getKey()) {
                 storageProject.delete(id);
@@ -76,7 +86,12 @@ public class Creator {
             System.out.println("Невозможно создать задачу без проекта");
             return;
         }
-        int inputProject = Integer.parseInt(reader.readLine());
+        int inputProject = 0;
+        try {
+            inputProject = Integer.parseInt(reader.readLine());
+        } catch (NumberFormatException e) {
+            System.out.println("Ошибка ввода, вероятнее всего вы ввели не цифру");
+        }
         for (Map.Entry<Integer, Project> pair : storageProject.getStorage().entrySet()) {
             Project project = pair.getValue();
             if (project.getID() == inputProject) {
@@ -129,7 +144,12 @@ public class Creator {
         userControl = false;
         storageTask.getAllTask(storageTask.getStorage());
         System.out.println("Введите ID задачи для удаления");
-            int idTaskForDelete = Integer.parseInt(reader.readLine());
+            int idTaskForDelete = 0;
+        try {
+            idTaskForDelete = Integer.parseInt(reader.readLine());
+        } catch (NumberFormatException e) {
+            System.out.println("Вы ввели не цифру");
+        }
             for (Map.Entry<Integer, Task> pair : storageTask.getStorage().entrySet()) {
                 Task task = pair.getValue();
                 if (task.getID() == idTaskForDelete) {
@@ -150,7 +170,7 @@ public class Creator {
                     User user = pair.getValue();
                     user.deleteTask(task);
                 }
-                storageTask.delete(idTaskForDelete);
+                storageTask.delete(idTaskForDelete, storageUser, storageProject);
             }
     }
 

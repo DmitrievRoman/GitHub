@@ -1,11 +1,13 @@
 import storage.StorageProject;
 import storage.StorageTask;
 import storage.StorageUser;
+import units.Project;
+import units.User;
 
 import java.io.*;
+import java.util.Map;
 /*
-Класс подгружает данные прошлой сессии
-Здесь же
+Данный класс содержит основной цикл программы
 
  */
 
@@ -68,13 +70,33 @@ public class Starter {
             } else if (userInput.equals("9")) {
                 System.out.println("Введите ID проекта для которого хотите увидеть список задач");
                 storageProject.getAll(storageProject.getList());
-                int id = Integer.parseInt(reader.readLine());
-                storageTask.getAllTasksInProject(id, storageProject);
+                try {
+                    int id = Integer.parseInt(reader.readLine());
+                    for (Map.Entry<Integer, Project> pair : storageProject.getStorage().entrySet()) {
+                        if(pair.getKey() == id) {
+                            storageTask.getAllTasksInProject(id, storageProject);
+                        } else {
+                            System.out.println("Вы ввели не существующий ID");
+                        }
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("Проекта с таким ID не существует");
+                }
             } else if (userInput.equals("0")) {
                 System.out.println("Введите ID пользователя для которого хотите увидеть список задач");
                 storageUser.getAll(storageUser.getList());
-                int id = Integer.parseInt(reader.readLine());
-                storageTask.getAllTasksForUser(id, storageUser);
+                try {
+                    int id = Integer.parseInt(reader.readLine());
+                    for(Map.Entry<Integer, User> pair : storageUser.getStorage().entrySet()) {
+                        if(pair.getKey() == id) {
+                            storageTask.getAllTasksForUser(id, storageUser);
+                        } else {
+                            System.out.println("Вы ввели не существующий ID");
+                        }
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("Пользователя с таким ID не существует");
+                }
             } else if (userInput.equals("exit")) {
                 startMenu.save();
                   reader.close();

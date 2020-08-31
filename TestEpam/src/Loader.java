@@ -10,6 +10,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
+//Данный класс отвечает за загрузку данных из сейвфайла
 
 public class Loader {
     StorageUser storageUser;
@@ -22,8 +23,8 @@ public class Loader {
         this.storageProject = storageProject;
         this.storageTask = storageTask;
         this.starter = starter;
-        this.usersForSave = usersForSave;
     }
+    //метод загружает данные из файла, по умолчанию это Save.ser, но пользователь может передать и другой путь к файлу
     public void load(String pathToSourceFile) throws IOException, ClassNotFoundException {
         File sourceFile = new File(pathToSourceFile);
         ObjectInputStream ois = null;

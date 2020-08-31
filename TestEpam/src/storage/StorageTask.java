@@ -67,6 +67,7 @@ public class StorageTask extends Storage {
         //сообщение для отладки
         System.out.println("Вызван неправильный метод потомка класса storage");
     }
+    //Данный метод выводит на экран все задачи назначеные на конкретного пользователя
     public void getAllTasksForUser (int id, StorageUser storageUser) {
         User user = storageUser.getStorage().get(id);
         int number = 0;
@@ -80,6 +81,7 @@ public class StorageTask extends Storage {
             System.out.println("-Описание: " + userTasks.get(i).getDescription());
         }
     }
+    //Данный метод выводит на экран задачи для конкретного проекта
     public void getAllTasksInProject (int id, StorageProject storageProject) {
         Project project = storageProject.getStorage().get(id);
         int number = 0;
