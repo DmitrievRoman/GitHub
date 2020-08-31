@@ -38,6 +38,7 @@ public class Loader {
         User.userCount = 0;
         Task.taskCount = 0;
         Project.projectCount = 0;
+        //Код ниже рассортировывает объеты по их хранилищам
         usersForSave = (ArrayList<User>) ois.readObject();
         for (int j = 0; j < usersForSave.size(); j++) {
             User user = usersForSave.get(j);
@@ -49,6 +50,8 @@ public class Loader {
                 if (user.getUserTasks().get(i).getID() >= Task.taskCount) {
                     Task.taskCount = user.getUserTasks().get(i).getID();
                 }
+                Task task = user.getUserTasks().get(i);
+                storageTask.add(task.getID(), task);
                 Project project = user.getUserTasks().get(i).getProject();
                 storageProject.add(project.getID(), project);
                 if (project.getID() >= Project.projectCount) {
